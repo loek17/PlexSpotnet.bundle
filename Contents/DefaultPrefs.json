@@ -1,0 +1,91 @@
+[
+    {
+        "id": "SPOTNET_UPDATE_ON_BOOT",
+        "type": "bool",
+        "label": "Update database on startup",
+        "default": "False" 
+    },
+    {
+        "id" : "KEEP_PRON",
+        "type": "bool",
+        "label": "Keep pronografic material",
+        "default": "False"
+    },
+    {
+        "id" : "MAX_AGE",
+        "type": "text",
+        "label": "Max age of displayed posts",
+        "default": "False"
+    },
+    {
+        "id": "SPOTNET_SERVER_HOST",
+        "type": "text",
+        "label": "Usernet hostserver",
+        "default": "" 
+    },
+    {
+        "id": "SPOTNET_SERVER_PORT",
+        "type": "text",
+        "label": "Usernet Port (119)",
+        "default": "119"
+    },
+    {
+        "id": "SERVER_USERNAME",
+        "type": "text",
+        "label": "Username (only if needed)",
+        "default": "" 
+    },
+    {
+        "id": "SERVER_PASSWORD",
+        "type": "text",
+        "label": "Password (only if needed)",
+        "default": "",
+        "secure": "true",
+        "option": "hidden", 
+        "secure": "true"
+    },
+    {
+        "id" : "SERVER_READERMODE",
+        "type": "bool",
+        "label": "Readmode (for some servers needed)",
+        "default": "False"
+    },
+    {
+        "id" : "MAX_CONNECTIONS",
+        "type": "text",
+        "label": "Max connections for newsserver",
+        "default": "3"
+    },
+    {
+        "id" : "SABNZBD_IP",
+        "type": "text",
+        "label": "SABnzbd ip adress",
+        "default": "127.0.0.1"
+    },
+    {
+        "id" : "SABNZBD_POORT",
+        "type": "text",
+        "label": "SABnzbd ip poort",
+        "default": "8080"
+    },
+    {
+        "id" : "SABNZBD_HTTPS",
+        "type": "bool",
+        "label": "SABnzbd use hppts",
+        "default": "False"
+    },
+    {
+        "id" : "SABNZBD_USER",
+        "type": "text",
+        "label": "SABnzbd user name (if needed)",
+        "default": ""
+    },
+    {
+        "id" : "SABNZBD_PASS",
+        "type": "text",
+        "label": "SABnzbd password (if needed)",
+        "secure": "true",
+        "option": "hidden",
+        "default": ""
+    },
+]
