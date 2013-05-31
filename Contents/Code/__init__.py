@@ -10,7 +10,7 @@
 #
 #####################################################################
 import sys
-sys.path.append(Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'Plex-spotnet-python.bundle' , 'Contents' , "Code"))
+sys.path.append(Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'PlexSpotnet.bundle' , 'Contents' , "Code"))
 
 import Base_Settings
 from Spotnet import Edit_Filter , Search , Update , BaseSpotnet

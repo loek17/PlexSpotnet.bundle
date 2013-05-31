@@ -25,7 +25,7 @@ def start():
     if Settings.UPDATE_ON_BOOT:
         Update.start_update()
     
-    Settings.ROOT_PATH              = Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'Plex-spotnet-python.bundle' , 'Contents')
+    Settings.ROOT_PATH              = Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'PlexSpotnet.bundle' , 'Contents')
     Settings.IMAGE_DIR              = Core.storage.join_path(Settings.ROOT_PATH , 'Resources' , "%s.jpg")
     Settings.DB_DIR                 = Core.storage.join_path(Settings.ROOT_PATH , 'Database')
     Settings.POST_DB                = PostDatabase()
@@ -90,10 +90,10 @@ def display_filter(filter , page=0):
     oc = ObjectContainer(no_cache=True)
     for post in posts:
         oc.add(
-            DirectoryObject(
+            MovieObject(
                 key = Callback(display_post , messageid=post.messageid),
                 title = post.title,
-                tagline = "date %s" % post.posted,
+                tags = "date %s" % post.posted,
                 summary = post.description_markup,
                 thumb = post.image
             )
