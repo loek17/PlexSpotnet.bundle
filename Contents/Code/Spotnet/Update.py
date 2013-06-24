@@ -1,5 +1,5 @@
 import Settings
-from Connection import Connection, ConnectError
+from Connection import Connection
 
 Settings.load()
 

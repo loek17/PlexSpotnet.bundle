@@ -233,6 +233,11 @@ class Connection(object):
             # TODO: don't give up so easily
             logger("failed to add post, networkt error ,  " + messageid)
             return False
+        except EOFError as e:
+            logger("we where disconnected we reconnect now")
+            self.disconnect()
+            self.connect()
+            return self.add_post(self, postnumber, messageid, logger=Log.Info)
         # check for dispose messages
         subject = self.get_post_header('Subject', post)
         if subject.startswith('DISPOSE '):  # and '@' in subject:
