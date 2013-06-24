@@ -90,10 +90,10 @@ def display_filter(filter , page=0):
     oc = ObjectContainer(no_cache=True)
     for post in posts:
         oc.add(
-            MovieObject(
+            DirectoryObject(
                 key = Callback(display_post , messageid=post.messageid),
                 title = post.title,
-                tags = "date %s" % post.posted,
+                tagline = "date %s" % post.posted,
                 summary = post.description_markup,
                 thumb = post.image
             )

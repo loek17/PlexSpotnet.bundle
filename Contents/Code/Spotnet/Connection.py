@@ -258,12 +258,13 @@ class Connection(object):
         self.db.add_post_to_database(newpost)
         # maby check if message id is unique // done is add_post_to_database
         # get image and save it
-        try:
-            self.get_image(newpost.image_segs['segment'])
-        except (NotFoundError , EOFError):
-            pass
-        except:
-            raise
+        if newpost.has_image():
+            try:
+                self.get_image(newpost.image_segs['segment'])
+            except (NotFoundError , EOFError):
+                pass
+            except:
+                raise
         return True
 
     def send_noop(self):

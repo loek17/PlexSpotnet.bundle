@@ -375,6 +375,11 @@ class Post:
     
     def has_nzb(self):
         return len(self.nzb) > 0
+    
+    def has_image(self):
+        if self.image_segs and len(self.image_segs['segment'])>0:
+            return True
+        return False
 
     def is_porn(self):
         return "01z03" in self.subcategory_codes \

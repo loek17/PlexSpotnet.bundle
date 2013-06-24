@@ -2,7 +2,7 @@ import Api
 import SabSettings
 #from Spotnet.Connection import Connection
 
-class hhException(Exception):
+class ConException(Exception):
     pass
 
 def add_spotnet_post(post , **kwargs):   
@@ -15,7 +15,7 @@ def add_spotnet_post(post , **kwargs):
 def check_connection():
     try:
         resp = Api.version()
-    except hhException as e:
+    except ConException as e:
         Log.Info(e)
         return False , e
     if "Error" in resp:
