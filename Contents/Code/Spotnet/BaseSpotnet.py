@@ -1,10 +1,8 @@
-from Errors import *
 from Filter import Filter
 from Database import PostDatabase , FilterDatabase
 from Connection import Connection
 
-import Settings
-#import Edit_Filter
+from SpotnetSettings import SpotSettings as Settings
 import Update
 import Search
 
@@ -21,16 +19,15 @@ import SABnzbd
 
 def start():
     #TODO maby test internet and newsserver connection
-    Settings.load()
-    if Settings.UPDATE_ON_BOOT:
-        Update.start_update()
-    
+
     Settings.ROOT_PATH              = Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'PlexSpotnet.bundle' , 'Contents')
     Settings.IMAGE_DIR              = Core.storage.join_path(Settings.ROOT_PATH , 'Resources' , "%s.jpg")
     Settings.DB_DIR                 = Core.storage.join_path(Settings.ROOT_PATH , 'Database')
     Settings.POST_DB                = PostDatabase()
     Settings.FILTER_DB              = FilterDatabase()
     
+    if Settings.UPDATE_ON_BOOT:
+        Update.start_update()
     
     return True
     

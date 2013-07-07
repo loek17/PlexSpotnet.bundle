@@ -1,8 +1,8 @@
 # project specifiek
 /Contents/Database/
 /Contents/Resources/
-!Contents/Resources/art-default.jpg
-!Contents/Resources/icon-default.jpg
+!/Contents/Resources/art-default.jpg
+!/Contents/Resources/icon-default.jpg
 
 #python specific
 *.pyc

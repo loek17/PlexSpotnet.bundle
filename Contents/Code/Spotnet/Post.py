@@ -1,12 +1,7 @@
 
-#from dateutil.parser import parse as parse_datetime
-#from xml.dom.minidom import parseString
-#from datetime import datetime, timedelta
 from Decode import decode_nzb, DecodeNzbError
 from Subcategories import Subcategory , Category
-import Settings
-#import cPickle as pickle
-#from datetime import datetime
+from SpotnetSettings import SpotSettings as Settings
 import re 
 
 class InvalidPost(Exception):

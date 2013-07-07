@@ -1,11 +1,11 @@
-import Settings
+from SpotnetSettings import SpotSettings as Settings
 from Connection import Connection
 
-Settings.load()
+UpdateThread = None
 
 @route('%s/Update/Update_Spots' % Settings.APP_PREFIX)
 def update_spots():
-    if 'thread' not in Settings.QUEUE or not Settings.QUEUE['thread'].isAlive():
+    if not UpdateThread or not UpdateThread.isAlive():
         oc = ObjectContainer(
             objects = [
                 DirectoryObject(
@@ -35,8 +35,13 @@ def update_spots():
 
 @route('%s/Update/Start_Update' % Settings.APP_PREFIX)
 def start_update():
-    con = Connection(Settings.POST_DB , True)
-    Settings.QUEUE['thread'] = Thread.Create(con.update)
+    global UpdateThread
+    if not UpdateThread or not UpdateThread.isAlive():
+        con = Connection(Settings.POST_DB , True)
+        UpdateThread = Thread.Create(con.update)
+    else:
+        Thread.CreateTimer(86400.0 , con.update)
+    
 
 @route('%s/Update/Dummy' % Settings.APP_PREFIX)
 def dummy():

@@ -6,13 +6,12 @@
 # Version: 0.1
 # About:        Spotnet plugin for plex
 #
-#Netbeans commit test
+# Netbeans commit test
 #
 #####################################################################
-import sys
-sys.path.append(Core.storage.join_path(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name) , 'PlexSpotnet.bundle' , 'Contents' , "Code"))
+Core.sandbox.custom_paths.append(Core.storage.join_path(Core.app_support_path, Core.config.bundles_dir_name , 'PlexSpotnet.bundle' , 'Contents' , "Code"))
 
-import Base_Settings
+from BaseSettings import Settings
 from Spotnet import Edit_Filter , Search , Update , BaseSpotnet
 from SABnzbd import SABnzbdBase
 
@@ -25,9 +24,10 @@ view_modes = {
   def add_view_group(self, name, viewMode=None, mediaType=None, type=None, menu=None, cols=None, rows=None, thumb=None, summary=None)
 """
 
+
 def Start():
     # Initialize the plugin
-    Plugin.AddPrefixHandler(Base_Settings.APP_PREFIX, MainMenu, Base_Settings.NAME, Base_Settings.ICON, Base_Settings.ART)
+    Plugin.AddPrefixHandler(Settings.APP_PREFIX, MainMenu, Settings.NAME, Settings.ICON, Settings.ART)
     Plugin.AddViewGroup("List", viewMode="List", mediaType="items")
     Plugin.AddViewGroup("InfoList", viewMode = "InfoList", mediaType = "items")
     Plugin.AddViewGroup("MediaPreview", viewMode="MediaPreview", mediaType="items")
@@ -43,29 +43,27 @@ def Start():
     Plugin.AddViewGroup("Pictures", viewMode="Pictures", mediaType="items")
     
     # Setup the default attributes for the ObjectContainer
-    ObjectContainer.title1 = Base_Settings.NAME
+    ObjectContainer.title1 = Settings.NAME
     ObjectContainer.view_group = 'MediaPreview'
-    ObjectContainer.art = R(Base_Settings.ART)
+    ObjectContainer.art = R(Settings.ART)
     
-    CheckPrefs()
-    
-    
-def CheckPrefs(retry=False):
+    ValidatePrefs()
+
+def ValidatePrefs():
     if BaseSpotnet.start() and SABnzbdBase.start():
-        Base_Settings.OKE = True
+        Settings.OKE = True
+        Dict['warning']=[]
     else:
-        Base_Settings.QUEUE['warning'].insert(0,'Not all settings are set correct!')
-        Base_Settings.OKE = False 
-    
-    if retry:
-        return MainMenu()
+        Dict['warning'].insert(0,'Not all settings are set correct!')
+        Settings.OKE = False 
+    return MainMenu()
 
-
-@route("%s/MainMenu" % Base_Settings.APP_PREFIX)
+@route("%s/MainMenu" % Settings.APP_PREFIX)
 def MainMenu():
-    if Base_Settings.OKE:
+    if Settings.OKE:
         oc = ObjectContainer(
             replace_parent = True,
+            no_cache = True,
             objects = [
                 DirectoryObject(
                     key = Callback(test),
@@ -96,9 +94,9 @@ def MainMenu():
             replace_parent = True,
             objects=[
                 DirectoryObject(
-                    key = Callback(CheckPrefs , retry=True),
+                    key = Callback(ValidatePrefs),
                     title = "Warning not al settings are set correct",
-                    summary = '\n'.join(Base_Settings.QUEUE['warning'])
+                    summary = '\n'.join(Dict['warning'])
                 ),
                 PrefsObject(title='Preferences')
             ]

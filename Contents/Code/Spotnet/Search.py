@@ -1,8 +1,5 @@
-import Settings
+from SpotnetSettings import SpotSettings as Settings
 import Edit_Filter
-import BaseSpotnet
-
-Settings.load()
 
 @route('%s/Search/Display_Categories' % Settings.APP_PREFIX)
 def display_categories():
@@ -71,7 +68,7 @@ def search(cat , advanced = False , query = None):
                     summary = "Display or Hide pornorafic material \n " + ("Visable" if Settings.QUEUE['filter'].get("porn" , False) else "Hidden")
                 ),
                 DirectoryObject(
-                    key = Callback(display_filter , filter = 99999),
+                    key = Callback(display_filter),
                     title = "Search Now",
                     summary = "Search with the selected settings"
                 )
@@ -95,8 +92,26 @@ def set_filter_porn(**kwargs):
     return Edit_Filter.set_filter_porn(**kwargs)
 
 @route('%s/Search/Display_Filter' % Settings.APP_PREFIX)
-def display_filter(**kwargs):
-    return BaseSpotnet.display_filter(**kwargs)
+def display_filter():
+    posts = Settings.POST_DB.get_posts_by_filter(filter , page * Settings.POST_PER_PAGE , Settings.POST_PER_PAGE)
+    oc = ObjectContainer(no_cache=True)
+    for post in posts:
+        oc.add(
+            DirectoryObject(
+                key = Callback(display_post , messageid=post.messageid),
+                title = post.title,
+                tagline = "date %s" % post.posted,
+                summary = post.description_markup,
+                thumb = post.image
+            )
+        )
+    oc.add(
+        NextPageObject(
+            key = Callback(display_filter , filter=filter.id , page=page+1),
+            summary = 'Display the next %d posts' % Settings.POST_PER_PAGE
+        )
+    )
+    return oc
 
 @route('%s/Search/Dummy' % Settings.APP_PREFIX)
 def dummy():

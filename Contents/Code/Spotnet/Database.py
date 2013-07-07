@@ -1,7 +1,7 @@
 from buzhug import TS_Base as Base
 from Post import Post
 from Filter import Filter
-import Settings
+from SpotnetSettings import SpotSettings as Settings
 import os
 
 class PostDatabase:

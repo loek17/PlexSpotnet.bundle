@@ -1,5 +1,4 @@
-import Settings
-Settings.load()
+from SpotnetSettings import SpotSettings as Settings
 
 @route('%s/EditFilter/Display_Catorgies' % Settings.APP_PREFIX)
 def display_categories():

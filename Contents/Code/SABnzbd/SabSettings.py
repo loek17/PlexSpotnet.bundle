@@ -1,4 +1,4 @@
-from Base_Settings import *
+from BaseSettings import Settings
 
 def _(str):
     try:
@@ -14,9 +14,10 @@ def get(name , fallback):
         retr = fallback
     return retr
 
-SABNZBD_IP = get("SABNZBD_IP" , "127.0.0.1")
-SABNZBD_POORT = get("SABNZBD_POORT" , "8080")
-SABNZBD_HTTPS = get("SABNZBD_HTTPS" , False)
-SABNZBD_MODE = "json"
-SABUSER = get("SABNZBD_USER" , "")
-SABPASS = get("SABNZBD_PASS" , "")
+class SabSettings(Settings):
+    SABNZBD_IP = get("SABNZBD_IP" , "127.0.0.1")
+    SABNZBD_POORT = get("SABNZBD_POORT" , "8080")
+    SABNZBD_HTTPS = get("SABNZBD_HTTPS" , False)
+    SABNZBD_MODE = "json"
+    SABUSER = get("SABNZBD_USER" , "")
+    SABPASS = get("SABNZBD_PASS" , "")

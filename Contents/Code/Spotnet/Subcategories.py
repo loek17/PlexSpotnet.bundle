@@ -1,4 +1,4 @@
-import Settings
+from SpotnetSettings import SpotSettings as Settings
 
 UNKNOWN_TEXT = 'unknown'
 

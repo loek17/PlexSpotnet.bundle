@@ -1,9 +1,5 @@
 import Api
-import SabSettings
-#from Spotnet.Connection import Connection
-
-class ConException(Exception):
-    pass
+from SabSettings import SabSettings
 
 def add_spotnet_post(post , **kwargs):   
     if post.has_encrypted_nzbsite():
@@ -15,9 +11,9 @@ def add_spotnet_post(post , **kwargs):
 def check_connection():
     try:
         resp = Api.version()
-    except ConException as e:
+    except Exception as e:
         Log.Info(e)
-        return False , e
+        return False , str(e)
     if "Error" in resp:
         return False , resp['Error']
     return True , "oke"

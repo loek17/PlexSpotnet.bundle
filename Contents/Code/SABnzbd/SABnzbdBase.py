@@ -1,5 +1,5 @@
 import Helper
-import SabSettings
+from SabSettings import SabSettings
 
 
 def start():
@@ -7,5 +7,5 @@ def start():
     if check:
         return True
     else:
-        SabSettings.QUEUE['warning'].append(message)
+        Dict['warning'].append(message)
         return False

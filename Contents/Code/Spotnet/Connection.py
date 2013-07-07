@@ -2,13 +2,10 @@ import nntplib
 import socket
 import errno
 import sys
-
-import zlib
 import io
-                                #misschien beter
 from cStringIO import StringIO    #now using
 
-import Settings
+from SpotnetSettings import SpotSettings as Settings
 from Post import RawPost, InvalidPost , Post
 from Decode import decode_nzb, DecodeNzbError , decode_image
 
@@ -235,7 +232,10 @@ class Connection(object):
             return False
         except EOFError as e:
             logger("we where disconnected we reconnect now")
-            self.disconnect()
+            try:
+                self.disconnect()
+            except:
+                pass
             self.connect()
             return self.add_post(self, postnumber, messageid, logger=Log.Info)
         # check for dispose messages
@@ -356,22 +356,33 @@ class Connection(object):
         # postnumber
         messageid = self.get_last_messageid_in_db()
         if messageid is None:
-            return None
+            return Dict['last_added']
         try:
             stat = self.nntp.stat(messageid)
         except (nntplib.NNTPError, socket.error) as e:
-            return None
+            return Dict['last_added']
         else:
             if str(stat[1]) == str(0):
                 try:
                    snp = self.db.db.select(['postnumber' , 'posted']).sort_by('-posted')[0]
                 except:
-                    return None
+                    return Dict['last_added']
                 else:
                     return snp.postnumber
             else:
                 return stat[1]
 
+    def get_last_postnumber_by_time(self , group):
+        last_datetime = Datetime.Now() - Datetime.Delta(days = int(Settings.MAX_AGE))
+        date = last_datetime.strftime('yymmdd')
+        time = last_datetime.strftime('hhmmss')
+        try:
+            retr = self.nntp.newnews(group , date , time)
+        except:
+            pass
+        Log.Info(retr[1][0])
+        Log.Info(retr[1][-1])
+        raise NotImplementedError
+
     def set_last_postnumber_in_db(self, last_added):
-        if Settings.UPDATE_LAST_STORAGE:
-            raise NotImplementedError
+        Dict['last_added'] = last_added
